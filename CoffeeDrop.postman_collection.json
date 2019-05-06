@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": ""
+					"raw": "https://coffeedroptest.herokuapp.com/api/auth/GetNearestLocation"
 				},
 				"description": "Returns the address and opening times of the nearest CoffeeDrop location"
 			},
@@ -34,7 +34,7 @@
 					"raw": "{\n      \"postcode\": \"CV313PP\",\n      \"opening_times\": {\"monday\" : \"09:00\", \"tuesday\" : \"09:00\", \"saturday\" : \"08:30\"},\n      \"closing_times\": {\"monday\" : \"19:00\", \"tuesday\" : \"19:00\", \"saturday\" : \"18:30\"}\n}\n\n"
 				},
 				"url": {
-					"raw": ""
+					"raw": "https://coffeedroptest.herokuapp.com/api/auth/CreateNewLocation"
 				},
 				"description": ""
 			},
@@ -55,7 +55,7 @@
 					"raw": "{\n      \"Ristretto\": 10,\n      \"Espresso\": 100,\n      \"Lungo\":30\n}\n\n"
 				},
 				"url": {
-					"raw": ""
+					"raw": "https://coffeedroptest.herokuapp.com/api/auth/CalculateCashback"
 				},
 				"description": ""
 			},
