@@ -20,27 +20,27 @@ class CashbackController extends BaseController
     protected $pods = [ 'Ristretto', 'Espresso', 'Lungo' ];
 
     /**
-    * Array of available coffee pods
+    * Array of coffee pods rewards
     * @var array
     */
 
     protected $cashbacks = ['Ristretto' => [ 2, 3, 5 ],'Espresso' => [ 4, 6, 10 ],'Lungo' => [ 6, 9, 15 ]];
 
     /**
-     * calculate and return  cashback to customer
-     *
-     * @param Request $request
-     * @return float
-     */
+    * calculate and return  cashback to customer
+    *
+    * @param Request $request
+    * @return float
+    */
     public function CalculateCashback( Request $request ) 
     {
         $allcashback = 0;
         // check all available coffee pods
         foreach ( $this->pods as $pod ) {
-            // calculate  when coffee is available and return amount as int.
+            // calculate  when coffee is available and return amount as integer
             if ( isset( $request->$pod ) && is_int( $request->$pod ) ) {
                 $amount = $request->$pod;
-                // get the amount and cashback of a given coffee.
+                // get the amount and cashback of a given pod
                 if ( $amount > 0 && $amount <= 50 ) {
                     $allcashback += $amount * $this->cashbacks[ $pod ][ 0 ];
                 } elseif ( $amount > 50 && $amount <= 500 ) {
@@ -51,10 +51,10 @@ class CashbackController extends BaseController
             }
         }
 
-        /*store request in cashback_request table.*/
-        $this->storeRequest( $request, $allcashback);
+        /*store request in cashback_request table*/
+        $this->storeRequest($request, $allcashback);
 
-        /*format value to  pounds.*/
+        /*format value to  pounds*/
         return money_format( '%.2n', $allcashback / 100 );
     }
 
@@ -63,7 +63,7 @@ class CashbackController extends BaseController
     *
     * @param  int  $cashback
     * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
+    * 
     */
     public function storeRequest(Request $request,  int $cashback) 
     {

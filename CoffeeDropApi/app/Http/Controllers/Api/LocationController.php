@@ -12,10 +12,10 @@ use Validator;
 class LocationController extends BaseController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display all list of the locations.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index()
     {
         $locations = Location::all();
@@ -44,10 +44,10 @@ class LocationController extends BaseController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+    * Display the specified resource.
+    *
+    * @param Request $request
+    * @return \Illuminate\Http\Response
     */
 
     public function GetNearestLocation(Request $request)
@@ -77,7 +77,7 @@ class LocationController extends BaseController
             ->havingRaw('distance <= ?', [$radius])
             ->get();
                     
-            //return not found if request is not found
+            //return not found if request is null
             if(is_null($getnearest)) {
                 return $this->sendError('Location not found.');
             }
@@ -116,8 +116,7 @@ class LocationController extends BaseController
 
     public function CreateNewLocation(Request $request)
     {
-        // No opening times in the request,
-        // Set status code and send error message.
+        // if no  opening times in the request return status code and send error message.
         if ( empty( $request->opening_times ) || empty( $request->closing_times ) ) {
             return $this->sendError('Please provide opening and closing hours');
         }
@@ -132,14 +131,12 @@ class LocationController extends BaseController
 
             return $this->sendError('Postcode is invalid, try again');
         }
-       
+
+        // get postcode data and opening times.
         $LatLong= PostCodeIO::get( $postcode );
         $returnopeningTimes = General::getOpeningTimes( $request->opening_times);
         $returnclosedTimes = General::getCloseTimes( $request->closing_times);
        
-        // Create new location and opening times.
-        //$rows =explode(',',$returnopeningTimes);
-          
            
         $store =array(
             'postcode' => $postcode,
